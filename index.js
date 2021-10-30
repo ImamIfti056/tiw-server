@@ -36,6 +36,13 @@ async function run(){
             res.send(allBookings);
         })
 
+        // GET SPECIFIC BOOKINGS
+        app.get('/mybookings/:email', async(req, res)=>{
+            const cursor = specificTravellerBooking.find({});
+            const packages = await cursor.toArray();
+            res.send(packages);
+        })
+
         // POST ALL TRAVELLERS TRIP
         app.post('/traveller', async(req, res) =>{
             const newTraveller = req.body;
@@ -45,14 +52,11 @@ async function run(){
             res.json(result);
         })
 
-        // POST SPECIFIC TRAVELLER TRIP
-        app.post('/traveller/:email', async(req, res) =>{
-            console.log('gettttt traveller id', req.params);
-            const newTraveller = req.body;
-            console.log('got new traveller', req.body);
-            const result = await specificTravellerBooking.insertOne(newTraveller);
-            console.log('added traveller', result);
-            // res.json(result);
+        // POST ADD NEW PACKAGE
+        app.post('/packages', async(req, res)=>{
+            const newPackage = req.body;
+            const result = await packageCollection.insertOne(newPackage);
+            res.json(result);
         })
 
         // DELETE TRIP
