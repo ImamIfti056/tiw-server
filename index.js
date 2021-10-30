@@ -20,6 +20,7 @@ async function run(){
         const database = client.db('tourism_website');
         const packageCollection = database.collection('packages');
         const trvallersBooking = database.collection('travellers_booking');
+        const specificTravellerBooking = database.collection('specific_traveller_booking');
 
         // GET PACKAGES API
         app.get('/packages', async(req, res) => {
@@ -35,13 +36,22 @@ async function run(){
             res.send(allBookings);
         })
 
-        // POST SPECIFIC TRAVELLER TRIP
+        // POST ALL TRAVELLERS TRIP
         app.post('/traveller', async(req, res) =>{
             const newTraveller = req.body;
             // console.log('got new traveller', req.body);
             const result = await trvallersBooking.insertOne(newTraveller);
             // console.log('added traveller', result);
             res.json(result);
+        })
+
+        // POST SPECIFIC TRAVELLER TRIP
+        app.post('/specific-traveller', async(req, res) =>{
+            const newTraveller = req.body;
+            console.log('got new traveller', req.body);
+            const result = await specificTravellerBooking.insertOne(newTraveller);
+            console.log('added traveller', result);
+            // res.json(result);
         })
 
         // DELETE TRIP
