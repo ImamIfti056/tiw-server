@@ -46,7 +46,8 @@ async function run(){
         })
 
         // POST SPECIFIC TRAVELLER TRIP
-        app.post('/specific-traveller', async(req, res) =>{
+        app.post('/traveller/:email', async(req, res) =>{
+            console.log('get traveller id', req.params);
             const newTraveller = req.body;
             console.log('got new traveller', req.body);
             const result = await specificTravellerBooking.insertOne(newTraveller);
