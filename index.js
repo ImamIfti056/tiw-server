@@ -46,9 +46,7 @@ async function run(){
         // POST ALL TRAVELLERS TRIP
         app.post('/traveller', async(req, res) =>{
             const newTraveller = req.body;
-            // console.log('got new traveller', req.body);
             const result = await trvallersBooking.insertOne(newTraveller);
-            // console.log('added traveller', result);
             res.json(result);
         })
 
@@ -56,6 +54,19 @@ async function run(){
         app.post('/packages', async(req, res)=>{
             const newPackage = req.body;
             const result = await packageCollection.insertOne(newPackage);
+            res.json(result);
+        })
+
+        // UPDATE STATUS
+        app.put('/allbookings/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const update = {
+                $set: {
+                    status: "Approved"
+                }
+            };
+            const result = await trvallersBooking.updateOne(query, update);
             res.json(result);
         })
 
